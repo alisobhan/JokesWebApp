@@ -155,5 +155,16 @@ namespace JokesWebApp.Controllers
         {
             return View();
         }
+
+        //GET Jokes/ShowSearchResults
+        public async Task<IActionResult> ShowSearchResults(string searchPhrase)
+        {
+            var mySearchContent = _context.Joke
+                .Where(q => q.JokeQuestion.Contains(searchPhrase) || q.JokeAnswer.Contains(searchPhrase));
+
+            return View("Index", await mySearchContent.ToListAsync());
+
+            //return View("Index", await _context.Joke.Where(j => j.JokeQuestion.Contains(searchPhrase)).ToListAsync());
+        }
     }
 }
